@@ -16,7 +16,7 @@ jobs:
           script: |
             const PROJECT_ID = "1";
             const issue = context.payload.issue;
-            const issue_number = issue.number;
+            const issue_number = context.issue.number;
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
