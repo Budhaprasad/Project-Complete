@@ -13,6 +13,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const PROJECT_ID = "1";
             const issue = context.payload.issue;
             const issue_number = issue.number;
             const owner = context.repo.owner;
