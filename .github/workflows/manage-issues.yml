@@ -14,13 +14,18 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const PROJECT_ID = "1";
             const issue = context.payload.issue;
-            const issue_number = context.issue.number;
+
+            if (!issue) {
+              console.log("❌ No issue found in event payload — skipping.");
+              return;
+            }
+
+            const issue_number = issue.number;
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
-            const labels = issue.labels.map(label => label.name);
+            const labels = issue.labels?.map(label => label.name) || [];
             const now = new Date().toISOString().split("T")[0];
 
             const comments = await github.rest.issues.listComments({
