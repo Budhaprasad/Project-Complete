@@ -1,0 +1,38 @@
+name: Label Based on Issue State
+
+on:
+  issues:
+    types: [opened, closed, labeled, unlabeled, edited]
+
+jobs:
+  label-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Status Labels
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.payload.issue;
+            const labels = issue.labels.map(l => l.name);
+            const issue_number = issue.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            if (issue.state === 'closed' && !labels.includes('Complete')) {
+              console.log(`Setting 'Complete' label on #${issue_number}`);
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number,
+                labels: ['Complete']
+              });
+            } else if (issue.state === 'open' && !labels.includes('In Progress')) {
+              console.log(`Setting 'In Progress' label on #${issue_number}`);
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number,
+                labels: ['In Progress']
+              });
+            }
