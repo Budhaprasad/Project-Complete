@@ -16,10 +16,6 @@ jobs:
           script: |
             const issue = context.payload.issue;
 
-            if (!issue) {
-              console.log("❌ No issue found in event payload — skipping.");
-              return;
-            }
 
             const issue_number = issue.number;
             const owner = context.repo.owner;
