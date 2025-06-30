@@ -58,9 +58,7 @@ jobs:
               }
 
               if (
-                issue.state === "closed" &&
-                labels.includes("Complete") &&
-                !alreadyHas("✅ Completion Date:")
+                issue.state === "closed" && !alreadyHas("✅ Completion Date:")
               ) {
                 await github.rest.issues.createComment({
                   owner,
