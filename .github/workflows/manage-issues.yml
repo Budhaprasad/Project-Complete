@@ -2,8 +2,6 @@ name: Auto Date Tracking
 
 on:
   workflow_dispatch:
-  issues:
-    types: [edited, closed]
 
 jobs:
   auto-date-tracking:
