@@ -64,9 +64,7 @@ jobs:
 
               // ✅ Add Completion Date if labeled "Complete" and issue is closed
               if (
-                issue.state === "closed" &&
-                labels.includes("Complete") &&
-                !alreadyHasComment(completeDateComment)
+                issue.state === "closed" && !alreadyHasComment(completeDateComment)
               ) {
                 await github.rest.issues.createComment({
                   owner,
