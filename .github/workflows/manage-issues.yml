@@ -3,6 +3,10 @@ name: Auto Date Tracking for All Issues
 on:
   workflow_dispatch:
 
+permissions:
+  issues: write
+  contents: read
+
 jobs:
   auto-date-tracking:
     runs-on: ubuntu-latest
