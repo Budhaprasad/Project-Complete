@@ -2,6 +2,10 @@ name: Auto Date Tracking
 
 on:
   workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'The issue number to check'
+        required: true
 
 jobs:
   auto-date-tracking:
@@ -12,14 +16,17 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const issue = context.payload.issue;
-
-
-            const issue_number = context.issue.number;
+            const issue_number = parseInt('${{ github.event.inputs.issue_number }}', 10);
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
-            const labels = issue.labels.map(label => label.name) || [];
+            const { data: issue } = await github.rest.issues.get({
+              owner,
+              repo,
+              issue_number
+            });
+
+            const labels = issue.labels?.map(label => label.name) || [];
             const now = new Date().toISOString().split("T")[0];
 
             const comments = await github.rest.issues.listComments({
