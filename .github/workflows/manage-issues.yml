@@ -21,7 +21,7 @@ jobs:
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
-            const labels = issue.labels?.map(label => label.name) || [];
+            const labels = issue.labels.map(label => label.name) || [];
             const now = new Date().toISOString().split("T")[0];
 
             const comments = await github.rest.issues.listComments({
